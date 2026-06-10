@@ -6,9 +6,15 @@ import 'package:fluttercorsemeak/screens/meals.dart';
 import 'package:fluttercorsemeak/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key, required this.onToggleFavorite});
+  const CategoriesScreen({
+    super.key,
+    required this.onToggleFavorite,
+    required this.favoriteMeals,
+  });
 
   final void Function(Meal meal) onToggleFavorite;
+  final List<Meal>
+  favoriteMeals; // 👈 2. NEU: Das ist die Tasche, in der die Liste gespeichert wird
 
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals

@@ -6,12 +6,16 @@ class Details extends StatelessWidget {
     super.key,
     required this.meal,
     required this.onToggleFavorite,
+    required this.favoriteMeals,
   });
   final void Function(Meal meal) onToggleFavorite;
   final Meal meal;
+  final List<Meal> favoriteMeals;
 
   @override
   Widget build(BuildContext context) {
+    final isFavorite = favoriteMeals.contains(meal);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
@@ -20,7 +24,10 @@ class Details extends StatelessWidget {
             onPressed: () {
               onToggleFavorite(meal);
             },
-            icon: Icon(Icons.favorite),
+            icon: Icon(
+              Icons.favorite,
+              color: isFavorite ? Colors.red : Colors.white,
+            ),
           ),
         ],
       ),
