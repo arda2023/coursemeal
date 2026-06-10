@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttercorsemeak/models/meal.dart';
 import 'package:fluttercorsemeak/screens/categories.dart';
+import 'package:fluttercorsemeak/screens/filters.dart';
 import 'package:fluttercorsemeak/screens/meals.dart';
+import 'package:fluttercorsemeak/widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -12,6 +14,22 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
+  void _showInfoMessage(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  void _setScreen(String identifier) {
+    Navigator.of(context).pop();
+
+    if (identifier == "filters") {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (ctx) => const FitersScreen()));
+    }
+  }
 
   List<Meal> favMeals = [];
 
@@ -25,8 +43,10 @@ class _TabsScreenState extends State<TabsScreen> {
     setState(() {
       if (favMeals.contains(meal)) {
         favMeals.remove(meal);
+        _showInfoMessage("Meal no longe");
       } else {
         favMeals.add(meal);
+        _showInfoMessage("marked as");
       }
     });
   }
@@ -49,6 +69,7 @@ class _TabsScreenState extends State<TabsScreen> {
     }
     return Scaffold(
       appBar: AppBar(title: Text(activePageTitle)),
+      drawer: MainDrawer(onSelectScreen: _setScreen),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,

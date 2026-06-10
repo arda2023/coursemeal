@@ -23,7 +23,7 @@ class MealsScreen extends StatelessWidget {
         builder: (ctx) => Details(
           meal: meal,
           onToggleFavorite: onToggleFavorite,
-          favoriteMeals: meals,
+          favoriteMeals: favoriteMeals,
         ),
       ),
     );
