@@ -35,7 +35,7 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     Widget activePage = CategoriesScreen(
       onToggleFavorite: _toggleMealFavoriteStatus,
-      favoriteMeals: [],
+      favoriteMeals: favMeals,
     );
     var activePageTitle = "Categories";
 
@@ -43,6 +43,7 @@ class _TabsScreenState extends State<TabsScreen> {
       activePage = MealsScreen(
         meals: favMeals,
         onToggleFavorite: _toggleMealFavoriteStatus,
+        favoriteMeals: favMeals,
       );
       activePageTitle = "Your favortes";
     }

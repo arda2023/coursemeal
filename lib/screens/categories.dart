@@ -26,6 +26,7 @@ class CategoriesScreen extends StatelessWidget {
           title: category.title,
           meals: filteredMeals,
           onToggleFavorite: onToggleFavorite,
+          favoriteMeals: favoriteMeals,
         ),
       ),
     );
