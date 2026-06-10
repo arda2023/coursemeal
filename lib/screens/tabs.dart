@@ -22,6 +22,7 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
+
   void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(
@@ -34,9 +35,15 @@ class _TabsScreenState extends State<TabsScreen> {
 
     if (identifier == "filters") {
       final result = await Navigator.of(context).push<Map<Filter, bool>>(
-        MaterialPageRoute(builder: (ctx) => const FitersScreen()),
+        MaterialPageRoute(
+          builder: (ctx) => FitersScreen(currentFilters: _selectedFilters),
+        ),
       );
-      _selectedFilters = result ?? kInitialFilters;
+
+      // HIER IST DIE KORREKTUR: setState hinzugefügt, damit die Filter greifen!
+      setState(() {
+        _selectedFilters = result ?? kInitialFilters;
+      });
     }
   }
 
@@ -53,10 +60,10 @@ class _TabsScreenState extends State<TabsScreen> {
     setState(() {
       if (favMeals.contains(meal)) {
         favMeals.remove(meal);
-        _showInfoMessage("Meal no longe");
+        _showInfoMessage("Meal no longer favorite");
       } else {
         favMeals.add(meal);
-        _showInfoMessage("marked as");
+        _showInfoMessage("Marked as favorite");
       }
     });
   }
@@ -78,6 +85,7 @@ class _TabsScreenState extends State<TabsScreen> {
       }
       return true;
     }).toList();
+
     Widget activePage = CategoriesScreen(
       onToggleFavorite: _toggleMealFavoriteStatus,
       favoriteMeals: favMeals,
@@ -91,8 +99,9 @@ class _TabsScreenState extends State<TabsScreen> {
         onToggleFavorite: _toggleMealFavoriteStatus,
         favoriteMeals: favMeals,
       );
-      activePageTitle = "Your favortes";
+      activePageTitle = "Your favorites";
     }
+
     return Scaffold(
       appBar: AppBar(title: Text(activePageTitle)),
       drawer: MainDrawer(onSelectScreen: _setScreen),
