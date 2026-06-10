@@ -10,14 +10,16 @@ class CategoriesScreen extends StatelessWidget {
     super.key,
     required this.onToggleFavorite,
     required this.favoriteMeals,
+    required this.availableMeals,
   });
 
   final void Function(Meal meal) onToggleFavorite;
+  final List<Meal> availableMeals;
   final List<Meal>
   favoriteMeals; // 👈 2. NEU: Das ist die Tasche, in der die Liste gespeichert wird
 
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = dummyMeals
+    final filteredMeals = availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList();
     Navigator.of(context).push(
