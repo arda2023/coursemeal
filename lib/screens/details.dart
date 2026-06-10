@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttercorsemeak/models/meal.dart';
 
 class Details extends StatelessWidget {
-  const Details({super.key, required this.meal});
-
+  const Details({
+    super.key,
+    required this.meal,
+    required this.onToggleFavorite,
+  });
+  final void Function(Meal meal) onToggleFavorite;
   final Meal meal;
 
   @override
@@ -11,7 +15,14 @@ class Details extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
+        actions: [
+          IconButton(
+            onPressed: () {
+              onToggleFavorite(meal);
+            },
+            icon: Icon(Icons.favorite),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

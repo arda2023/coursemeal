@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttercorsemeak/models/meal.dart';
 import 'package:fluttercorsemeak/screens/categories.dart';
 import 'package:fluttercorsemeak/screens/meals.dart';
 
@@ -12,19 +13,36 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
 
+  List<Meal> favMeals = [];
+
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
   }
 
+  void _toggleMealFavoriteStatus(Meal meal) {
+    setState(() {
+      if (favMeals.contains(meal)) {
+        favMeals.remove(meal);
+      } else {
+        favMeals.add(meal);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget activePage = CategoriesScreen();
+    Widget activePage = CategoriesScreen(
+      onToggleFavorite: _toggleMealFavoriteStatus,
+    );
     var activePageTitle = "Categories";
 
     if (_selectedPageIndex == 1) {
-      activePage = MealsScreen(meals: []);
+      activePage = MealsScreen(
+        meals: favMeals,
+        onToggleFavorite: _toggleMealFavoriteStatus,
+      );
       activePageTitle = "Your favortes";
     }
     return Scaffold(
